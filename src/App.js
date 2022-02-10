@@ -1,27 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import ReactJson from 'react-json-view';
+import { useState } from 'react';
 
 function App() {
+
+  const [user, setUserInfo] = useState();
+  const [tasks, setTasks] = useState();
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-
-
+    <div>
       <button onClick={() => {
-
         async function getUserInfo() {
           const response = await fetch('/.auth/me');
           const payload = await response.json();
@@ -29,8 +18,23 @@ function App() {
           return clientPrincipal;
         }
 
-        console.log(getUserInfo());
+        const user = await getUserInfo();
+        setUserInfo(user);
+
       }}>获取用户信息</button>
+
+
+      <button onClick={() => {
+
+        const result = await fetch({ url: 'api/tasks' });
+        setTasks(result.body);
+
+      }}>调用中间服务</button>
+
+
+      <hr />
+      {user && <ReactJson src={user} />}
+      {tasks && <ReactJson src={tasks} />}
     </div>
   );
 }
