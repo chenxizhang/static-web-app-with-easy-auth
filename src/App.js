@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => {
+      <button onClick={async () => {
         async function getUserInfo() {
           const response = await fetch('/.auth/me');
           const payload = await response.json();
@@ -24,7 +24,7 @@ function App() {
       }}>获取用户信息</button>
 
 
-      <button onClick={() => {
+      <button onClick={async () => {
 
         const result = await fetch({ url: 'api/tasks' });
         setTasks(result.body);
