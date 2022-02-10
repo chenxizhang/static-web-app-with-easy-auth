@@ -27,7 +27,7 @@ function App() {
       <button onClick={async () => {
 
         const result = await fetch("./api/tasks")
-        setTasks(result.body);
+        setTasks(await result.json());
 
       }}>调用中间服务</button>
 
